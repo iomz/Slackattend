@@ -1,0 +1,12 @@
+*.tmp
+*~
+*#*
+*.swp
+*.ico
+*.bak
+*.yml
+*.json
+.sass-cache
+.bundle
+vendor
+

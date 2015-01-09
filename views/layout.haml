@@ -1,0 +1,22 @@
+!!! XHTML
+%html
+  %head
+    %meta{"http-equiv" => "Content-Type", :content => "text/html", :charset => "UTF-8"}
+    %title= @title
+    / Vendor contents end
+    != yield_content :html_head
+    / User CSS
+    %link{:rel => "stylesheet", :href => "#{app_root}/main.css", :type => "text/css"}
+    / Vendor scripts
+    / jQuery
+    %script{:language => "javascript", :src => "//code.jquery.com/jquery-1.11.1.min.js", :type => "text/javascript"}
+    / User scripts
+    %script{:src => "#{app_root}/js/main.js", :charset => "UTF-8"}
+    / User scripts end
+  %body
+    #main
+      != yield
+    %hr
+    #footer
+      != yield_content :html_foot
+
