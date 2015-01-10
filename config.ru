@@ -1,19 +1,13 @@
-$stdout.sync = true #if development?
+# TODO: clean up 
 require 'bundler/setup'
 require 'haml'
-require 'json'
-require 'sass'
 require 'rack'
 require 'rubygems'
-require 'sinatra'
-require 'sinatra/cookies'
-require 'sinatra/reloader' #if development?
-require 'sinatra/content_for'
-require 'uri'
-require 'yaml'
+require 'slack'
 
 require File.dirname(__FILE__)+'/bootstrap'
-Bootstrap.init :inits, :helpers, :controllers
+Bootstrap.init :helpers
 
+$stdout.sync = true #if development?
 run Sinatra::Application
 

@@ -6,7 +6,10 @@
 *.bak
 *.yml
 *.json
+*.sqlite3
 .sass-cache
 .bundle
 vendor
+test
+tmp
 
