@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require "slack"
 require "open-uri"
 
@@ -42,7 +43,7 @@ res['members'].each do |u|
   username = u['name']
   avatar = u['profile']['image_original'] || u['profile']['image_192'] 
   unless excluded_users.include?(username)
-    Status.create(name: username, status: "退勤", updated_at: Time.now.to_f) if Status.where(:name => username).empty?
+    Status.create(name: username, status: "absent", updated_at: Time.now.to_f) if Status.where(:name => username).empty?
     Member.create(name: username, avatar: avatar)
     path = File.dirname(__FILE__)+"/../public/image/"+username+".jpg"
     open(avatar) {|f|

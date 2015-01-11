@@ -10,6 +10,7 @@
 .sass-cache
 .bundle
 public/image/*
+public/js/metro.min.js
 public/slackattend.html
 test
 tmp

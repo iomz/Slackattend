@@ -1,20 +1,29 @@
-!!! XHTML
+!!!
 %html
   %head
-    %meta{"http-equiv" => "Content-Type", :content => "text/html", :charset => "UTF-8"}
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "slackattend with Metro UI CSS Framework", :name => "product"}/
+    %meta{:content => "Attendance management application with slack", :name => "description"}/
+    %meta{:content => "Iori Mizutani, Tokyo, Japan", :name => "author"}/
+    %link{:href => "vendor/css/metro-bootstrap.css", :rel => "stylesheet"}/
+    %link{:href => "vendor/css/metro-bootstrap-responsive.css", :rel => "stylesheet"}/
+    %link{:href => "vendor/css/prettify.css", :rel => "stylesheet"}/
+    / Load JavaScript Libraries
+    %script{:src => "vendor/js/jquery.min.js"}
+    %script{:src => "vendor/js/jquery.widget.min.js"}
+    %script{:src => "vendor/js/prettify.js"}
+    / Metro UI CSS JavaScript plugins
+    %script{:src => "vendor/js/load-metro.js"}
     %title= @title
-    != yield_content :html_head
-    / Vendor CSS
-    %link{:rel => "stylesheet", :href => "#{app_root}/vendor/css/metro-bootstrap.min.css"}
-    / Vendor scripts
-    %script{:language => "javascript", :src => "#{app_root}/vendor/js/jquery.min.js", :type => "text/javascript"}
-    %script{:language => "javascript", :src => "#{app_root}/vendor/js/jquery-ui.min.js", :type => "text/javascript"}
-    %script{:language => "javascript", :src => "#{app_root}/vendor/js/metro.min.js", :type => "text/javascript"}
-    / User CSS
-    / User scripts
-    %script{:src => "#{app_root}/js/main.js", :charset => "UTF-8"}
+    %title 
   %body.metro
-    #main
+    .tile-area.tile-area-dark
+      %h1.tile-area-title.fg-white slackattend
+      .user-id
+        .user-id-image
+          %span.icon-user.no-display1
+          %img.no-display{:src => "favicon.ico"}/
+        .user-id-name
+          %span.first-name Iori
+          %span.last-name Mizutani
       != yield
-    %hr
-
