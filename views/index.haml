@@ -1,2 +1,5 @@
 - @members.each do |m|
-  %div.tile{"id" => "#{m.name}", "data-click" => "transform"}
+  .image-container.shadow{"id" => "#{m.name}", "data-click" => "transform" }
+    %img.cycle.span2{"src" => "#{m.avatar}"}
+    .overlay-fluid
+      #{m.name}: #{@statuses[m.name]}

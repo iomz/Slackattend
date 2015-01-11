@@ -7,6 +7,7 @@
 ## Quick start
     % gem install bundler foreman
     % bundle install --path vendor/bundle
+    % bundle exec rake db:migrate:reset
     % foreman start
 
 ## Features

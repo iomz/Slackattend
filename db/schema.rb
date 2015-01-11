@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20150111080436) do
 
   create_table "members", force: :cascade do |t|
     t.string   "name"
+    t.string   "avatar"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

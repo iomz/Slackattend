@@ -9,7 +9,9 @@
 *.sqlite3
 .sass-cache
 .bundle
-vendor
+public/image/*
+public/slackattend.html
 test
 tmp
+vendor
 

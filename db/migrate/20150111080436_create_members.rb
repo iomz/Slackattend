@@ -2,6 +2,7 @@ class CreateMembers < ActiveRecord::Migration
   def self.up
     create_table :members do |t|
       t.string :name
+      t.string :avatar
       t.timestamps :null => true
     end
   end

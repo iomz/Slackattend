@@ -1,4 +1,5 @@
-require 'slack'
+require "slack"
+require "open-uri"
 
 # init
 token = Conf['token']
@@ -39,9 +40,16 @@ res = Slack.users_list(options = {})
 @members = []
 res['members'].each do |u|
   username = u['name']
+  avatar = u['profile']['image_original'] || u['profile']['image_192'] 
   unless excluded_users.include?(username)
     Status.create(name: username, status: "退勤", updated_at: Time.now.to_f) if Status.where(:name => username).empty?
-    Member.create(name: username)
+    Member.create(name: username, avatar: avatar)
+    path = File.dirname(__FILE__)+"/../public/image/"+username+".jpg"
+    open(avatar) {|f|
+      File.open(path, "wb") do |file|
+        file.puts f.read 
+      end
+    }
   end
 end
 
