@@ -13,7 +13,11 @@ get '/' do
 
     ws.on(:message) do |msg|
       user, action = msg.data.split()
-      ws.send(user+":"+action)
+      status = (action == "enter") ? "出勤" : "退勤"
+      unless Member.where(:name => user).empty?
+        Status.create(:name => user, :status => status, :updated_at => Time.now.to_f)
+        ws.send(user+":"+action)
+      end
     end
 
     ws.on(:close) do |event|
@@ -23,13 +27,10 @@ get '/' do
     ws.rack_response
   else
     @title = Conf['title']
-    members = Member.all
-    statuses = {}
     @in_rooms = []
     @absents = []
-    members.each do |m|
-      statuses[m.name] = Status.order("id desc").find_by_name(m.name).status
-      if statuses[m.name] == "出勤"
+    Member.all.each do |m|
+      if Status.order("id desc").find_by_name(m.name).status == "出勤"
         @in_rooms << m
       else
         @absents << m

@@ -14,14 +14,15 @@ var leaveRoom = function(user) {
 $(document).click(function(e) {
     var id = $(e.target).attr("id");
     var alt = $(e.target).attr("alt");
-    if (id != undefined) {
+    var src = $(e.target).attr("src");
+    if ($('#'+id).attr('alt') != undefined) {
         console.log(id);
         $.Dialog({
             overlay: true,
             shadow: true,
             flat: true,
             draggable: true,
-            icon: '<img src="image/' + id + '.jpg">',
+            icon: '<img src="' + src + '">',
             title: '',
             content: '',
             padding: 10,
