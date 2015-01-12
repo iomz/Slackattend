@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'faye-websocket', require: 'faye/websocket'
 gem 'foreman'
 gem 'haml'
 gem 'json'
@@ -10,6 +11,5 @@ gem 'sinatra'
 gem 'sinatra-activerecord'
 gem 'sinatra-contrib'
 gem 'sqlite3'
-gem 'sass'
 gem 'thin' # instead of Webrick
 

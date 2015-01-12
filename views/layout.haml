@@ -8,22 +8,23 @@
     %link{:href => "vendor/css/metro-bootstrap.css", :rel => "stylesheet"}/
     %link{:href => "vendor/css/metro-bootstrap-responsive.css", :rel => "stylesheet"}/
     %link{:href => "vendor/css/prettify.css", :rel => "stylesheet"}/
+    %link{:href => "vendor/css/animate.css", :rel => "stylesheet"}/
     / Load JavaScript Libraries
     %script{:src => "vendor/js/jquery.min.js"}
     %script{:src => "vendor/js/jquery.widget.min.js"}
     %script{:src => "vendor/js/prettify.js"}
     / Metro UI CSS JavaScript plugins
     %script{:src => "vendor/js/load-metro.js"}
+    / Local JavaScript
+    %script{:src => "js/main.js"}
     %title= @title
-    %title 
   %body.metro
     .tile-area.tile-area-dark
       %h1.tile-area-title.fg-white slackattend
       .user-id
         .user-id-image
-          %span.icon-user.no-display1
-          %img.no-display{:src => "favicon.ico"}/
+          %img{:src => "favicon.ico"}/
         .user-id-name
-          %span.first-name Iori
-          %span.last-name Mizutani
+          %span.first-name Z202
+          %span.last-name Status
       != yield

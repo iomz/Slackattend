@@ -1,20 +1,20 @@
 
-.tile-group.five
+#in.tile-group.five
   .tile-group-title In-room
   - @in_rooms.each do |m|
-    .tile{"data-click" => "transform"}
+    .tile.animated.fadeIn{"data-click" => "transform"}
       .tile-content.image
-        %img{:src => "#{m.avatar}"}/
+        %img{:src => "#{m.avatar}", "id" => "#{m.name}", "alt" => "in"}/
       .brand
         .label.fg-amber #{m.name}
         .badge.available
     / end tile
 / End group
 
-.tile-group.three
+#out.tile-group.three
   .tile-group-title Absent
   - @absents.each do |m|
-    %a.tile.half.bg-dark{"data-click" => "transform"}
+    %a.tile.half.bg-dark.animated.fadeIn{"data-click" => "transform"}
       .tile-content
-        %img{:src => "#{m.avatar}"}/
+        %img{:src => "#{m.avatar}", "id" => "#{m.name}", "alt" => "out"}/
 / End tile group
