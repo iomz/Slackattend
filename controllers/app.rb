@@ -16,6 +16,14 @@ get '/' do
       status = (action == "enter") ? "出勤" : "退勤"
       unless Member.where(:name => user).empty?
         Status.create(:name => user, :status => status, :updated_at => Time.now.to_f)
+        msg = user + "さんが" + status + "しました。"
+        res = Slack.chat_postMessage(options = {
+          :ts => Time.now.to_f,
+          :channel => Conf['chid'],
+          :text => msg,
+          :username => 'slackattend'
+        })
+        pp res
         ws.send(user+":"+action)
       end
     end

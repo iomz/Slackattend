@@ -3,7 +3,7 @@ class CreateStatuses < ActiveRecord::Migration
     create_table :statuses do |t|
       t.string :name
       t.string :status
-      t.timestamp :updated_at
+      t.timestamps :null => true
     end
   end
 
