@@ -110,6 +110,29 @@ $(document).ready(function(e) {
         }
     }
     ws.onclose = function() {
+        // Need to reconnect here
+        $.Dialog({
+            overlay: true,
+            shadow: true,
+            flat: true,
+            draggable: true,
+            title: '',
+            content: '',
+            padding: 10,
+            width: '30%',
+            onShow: function(_dialog) {
+                var content =
+                    '<label>The websocket connection dropped...</label>' +
+                    '</div>' +
+                    '<label></label>' +
+                    '<div class="form-actions" align="right">' +
+                    '<button class="button success" type="button" onclick="location.reload()">Click here to reload the page</button> ' +
+                    '</div>';
+                $.Dialog.title('Connection lost');
+                $.Dialog.content(content);
+            }
+        });
+
         ws = new WebSocket(ws_uri);
     }
 
