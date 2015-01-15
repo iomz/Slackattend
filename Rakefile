@@ -1,4 +1,3 @@
-require "sinatra/activerecord"
+require "bundler/gem_tasks"
 require "sinatra/activerecord/rake"
-require "./bootstrap"
-require "./inits/db"
+require "./lib/slackattend"

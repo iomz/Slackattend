@@ -23,11 +23,13 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "foreman"
 
   spec.add_dependency "faye-websocket"
+  spec.add_dependency "haml"
+  spec.add_dependency "json"
   spec.add_dependency "puma"
   spec.add_dependency "slack-api"
   spec.add_dependency "sinatra"
   spec.add_dependency "sinatra-activerecord"
-  spec.add_dependency "haml"
+  spec.add_dependency "sqlite3"
 
   spec.required_ruby_version = ">= 2.0.0"
 end

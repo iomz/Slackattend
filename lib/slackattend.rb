@@ -3,12 +3,12 @@
   haml
   json
   open-uri
+  puma
+  sinatra/activerecord
   sinatra/base
   slack
   yaml
 ).each { |lib| require lib }
-
-Encoding.default_external = Encoding.find('UTF-8')
 
 %w(
   core

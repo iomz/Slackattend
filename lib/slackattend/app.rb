@@ -1,20 +1,20 @@
 module Slackattend
   class App < Sinatra::Base
-    def app_root
-      "#{env['rack.url_scheme']}://#{env['HTTP_HOST']}#{env['SCRIPT_NAME']}"
-    end
+    register Sinatra::ActiveRecordExtension
+    set :database, Slackattend.config[:database]
+    set :root, File.expand_path("../../", __FILE__)
 
     get '/' do
-      @title = config[:title]
-      @in_action = config[:in]
-      @out_action = config[:out]
+      @title = Slackattend.config[:title]
+      @in_action = Slackattend.config[:in]
+      @out_action = Slackattend.config[:out]
       @ins = []
       @outs = []
-      Member.all.each do |m|
+      CurrentMember.all.each do |m|
         case StatusLog.order("id desc").find_by_name(m.name).action
-        when config[:in]
+        when Slackattend.config[:in]
           @ins << m
-        when config[:out]
+        when Slackattend.config[:out]
           @outs << m
         end
       end

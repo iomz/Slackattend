@@ -4,12 +4,12 @@ module Slackattend
       @config ||= {}
     end
 
-    def start
+    def load_config
       YAML.load_file(File.expand_path('../../../config.yml', __FILE__)).each{ |k,v| config[k.to_sym] = v }
-      setup
     end
   end
 
   extend Core
+  Slackattend.load_config
 end
 

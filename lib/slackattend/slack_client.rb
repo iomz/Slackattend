@@ -12,10 +12,10 @@ module Slackattend
     DEFAULT_REPORT_TEMPLATE = %!%s %s!
 
     def setup
-      Slack.configure{|conf| conf.token = config[:token]}
+      Slack.configure{|conf| conf.token = Slackattend.config[:token]}
       raise InvalidToken if Slack.auth_test['ok'] == false
-      config[:report_channel_id] = get_channel_id_by_name
-      self.update_database
+      Slackattend.config[:report_channel_id] = get_channel_id_by_name(Slackattend.config[:report_channel_name])
+      update_database
     end
 
     # Get a Slack channel ID by its name
@@ -31,8 +31,11 @@ module Slackattend
         name = m['name']
         avatar_image_url = m['profile']['image_original'] || m['profile']['image_192']
         unless config[:excluded_users].include?(name)
-          CurrentMember.first_or_create(:name: name, :avatar_image_url: avatar)
-          StatusLog.create(:name: name) if StatusLog.where(:name => name).empty?
+          CurrentMember.where(name: name).first_or_create do |m|
+            m.name = name
+            m.avatar_image_url = avatar_image_url
+          end
+          StatusLog.create(:name => name, :action => config[:out]) if StatusLog.where(:name => name).empty?
         end
       end
     end
@@ -40,13 +43,13 @@ module Slackattend
     def post_update(status)
       name = status[:name]
       action = status[:action]
-      report_template = config[:report_template] || DEFAULT_REPORT_TEMPLATE
+      report_template = Slackattend.config[:report_template] || DEFAULT_REPORT_TEMPLATE
       text = report_template % [name, action]
-      Slack.chat_postMessage({
+      p Slack.chat_postMessage({
         :ts => Time.now.to_f,
-        :channel => config[:report_channel_id],
+        :channel => Slackattend.config[:report_channel_id],
         :text => text,
-        :username => config[:bot_name] || DEAFAULT_BOT_NAME
+        :username => Slackattend.config[:bot_name] || DEAFAULT_BOT_NAME
       })
     end
   end

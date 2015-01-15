@@ -1,9 +1,6 @@
-# -*- coding: utf-8 -*-
 module Slackattend
-  # rack middleware
   class Backend
-    KEEPALIVE_MINS = 15
-
+    KEEPALIVE_TIME = 15
     def initialize(app)
       @app = app
       @clients = []
@@ -11,7 +8,7 @@ module Slackattend
 
     def call(env)
       if Faye::WebSocket.websocket?(env)
-        ws = Faye::WebSocket.new(env, nil, ping: KEEPALIVE_MINS)
+        ws = Faye::WebSocket.new(env, nil, ping: KEEPALIVE_TIME)
 
         ws.on(:open) do |event|
           p [:open, ws.object_id]
@@ -28,7 +25,7 @@ module Slackattend
           name = data['name']
           action = data['action']
           unless CurrentMember.where(:name => name).empty?
-            Status.create(:name => name, :action => action)
+            StatusLog.create(:name => name, :action => action)
             Slackattend.post_update({:name => name, :action => action})
             ws.send({ id: name, action: action}.to_json)
           end
