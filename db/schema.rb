@@ -11,18 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150111080436) do
+ActiveRecord::Schema.define(version: 20150115181932) do
 
-  create_table "members", force: :cascade do |t|
+  create_table "current_members", force: :cascade do |t|
     t.string   "name"
-    t.string   "avatar"
+    t.string   "avatar_image_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "statuses", force: :cascade do |t|
+  create_table "status_logs", force: :cascade do |t|
     t.string   "name"
-    t.string   "status"
+    t.string   "action"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
