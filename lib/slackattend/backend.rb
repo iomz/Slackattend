@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-require 'faye/websocket'
-require 'json'
-
 module Slackattend
   # rack middleware
   class Backend
