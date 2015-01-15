@@ -17,6 +17,9 @@
     %script{:src => "vendor/js/load-metro.js"}
     / Local JavaScript
     %script{:src => "js/slackattend.js"}
+    %script
+      in_action = "#{@in_action}";
+      out_action = "#{@out_action}";
     %title= @title
   %body.metro
     .tile-area.tile-area-dark

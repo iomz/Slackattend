@@ -1,4 +1,4 @@
 module Slackattend
-  class Status < ActiveRecord::Base
+  class StatusLog < ActiveRecord::Base
   end
 end

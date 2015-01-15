@@ -24,19 +24,13 @@ module Slackattend
 
         ws.on(:message) do |event|
           p [:message, event.data]
-          user, action = event.data.split()
-          status = (action == "enter") ? "出勤" : "退勤"
-          unless Member.where(:name => user).empty?
-            Status.create(:name => user, :status => status, :updated_at => Time.now.to_f)
-            event = user + "さんが" + status + "しました。"
-            res = Slack.chat_postMessage(options = {
-              :ts => Time.now.to_f,
-              :channel => Conf['chid'],
-              :text => event,
-              :username => 'slackattend'
-            })
-            pp res
-            ws.send(user+":"+action)
+          data = JSON.parse(event.data)
+          name = data['name']
+          action = data['action']
+          unless CurrentMember.where(:name => name).empty?
+            Status.create(:name => name, :action => action)
+            Slackattend.post_update({:name => name, :action => action})
+            ws.send({ id: name, action: action}.to_json)
           end
         end
 

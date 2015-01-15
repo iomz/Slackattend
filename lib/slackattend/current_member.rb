@@ -1,6 +1,5 @@
 module Slackattend
-  class Member < ActiveRecord::Base
-    validates :name, uniqueness: true
-    validates :avatar, uniqueness: true
+  class CurrentMember < ActiveRecord::Base
+    validates_uniqueness_of :avatar_image_url, scope: :name
   end
 end
