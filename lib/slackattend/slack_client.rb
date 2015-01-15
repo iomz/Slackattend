@@ -36,6 +36,8 @@ module Slackattend
             m.avatar_image_url = avatar_image_url
           end
           StatusLog.create(:name => name, :action => config[:out]) if StatusLog.where(:name => name).empty?
+        else
+          CurrentMember.where(name: name).destroy_all
         end
       end
     end
