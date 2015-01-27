@@ -35,7 +35,7 @@ module Slackattend
             m.user = user
             m.avatar_image_url = avatar_image_url
           end
-          StatusLog.create(:user => user, :action => config[:out]) if StatusLog.where(:user => user).empty?
+          StatusLog.create(:user => user, :action =>:out) if StatusLog.where(:user => user).empty?
         else
           CurrentMember.where(user: user).destroy_all
         end
@@ -44,7 +44,7 @@ module Slackattend
 
     def post_update(status)
       user = status[:user]
-      action_name = Slackattend.config.key(status[:action])
+      action_name = Slackattend.config[status[:action]]
       report_template = Slackattend.config[:report_template] || DEFAULT_REPORT_TEMPLATE
       text = report_template % [user, action_name]
       p Slack.chat_postMessage({

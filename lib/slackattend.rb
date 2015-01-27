@@ -12,11 +12,11 @@
 ).each { |lib| require lib }
 
 %w(
-  core
   status_log
   current_member
   sojourn_time
   attendance_count
+  core
   slack_client
   websocket_handler
 ).each { |name| require_dependency File.expand_path("../slackattend/#{name}", __FILE__) }
@@ -36,10 +36,12 @@ module Slackattend
       CurrentMember.all.each do |m|
         p StatusLog.order("id desc").find_by_user(m.user).action
         case StatusLog.order("id desc").find_by_user(m.user).action
-        when Slackattend.config[:in]
+        when "in"
           @ins << m
-        when Slackattend.config[:out]
+        when "out"
           @outs << m
+        else
+          p StatusLog.order("id desc").find_by_user(m.user).action 
         end
       end
       haml :index
