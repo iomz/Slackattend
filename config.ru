@@ -6,6 +6,6 @@ Encoding.default_external = Encoding.find('UTF-8')
 
 Slackattend.setup
 Slackattend.update_database
-use Slackattend::Backend
+use Slackattend::WebsocketHandler
 run Slackattend::App
 

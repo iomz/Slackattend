@@ -7,6 +7,7 @@
   sinatra/activerecord
   sinatra/base
   slack
+  time
   yaml
 ).each { |lib| require lib }
 
@@ -14,8 +15,10 @@
   core
   status_log
   current_member
+  sojourn_time
+  attendance_count
   slack_client
-  backend
+  websocket_handler
 ).each { |name| require_dependency File.expand_path("../slackattend/#{name}", __FILE__) }
 
 module Slackattend
@@ -31,7 +34,8 @@ module Slackattend
       @ins = []
       @outs = []
       CurrentMember.all.each do |m|
-        case StatusLog.order("id desc").find_by_name(m.name).action
+        p StatusLog.order("id desc").find_by_user(m.user).action
+        case StatusLog.order("id desc").find_by_user(m.user).action
         when Slackattend.config[:in]
           @ins << m
         when Slackattend.config[:out]

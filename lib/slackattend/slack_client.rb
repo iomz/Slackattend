@@ -28,25 +28,25 @@ module Slackattend
     # Update users based on Slack userlist
     def update_database
       Slack.users_list['members'].each do |m|
-        name = m['name']
+        user = m['name']
         avatar_image_url = m['profile']['image_original'] || m['profile']['image_192']
-        unless config[:excluded_users].include?(name)
-          CurrentMember.where(name: name).first_or_create do |m|
-            m.name = name
+        unless config[:excluded_users].include?(user)
+          CurrentMember.where(user: user).first_or_create do |m|
+            m.user = user
             m.avatar_image_url = avatar_image_url
           end
-          StatusLog.create(:name => name, :action => config[:out]) if StatusLog.where(:name => name).empty?
+          StatusLog.create(:user => user, :action => config[:out]) if StatusLog.where(:user => user).empty?
         else
-          CurrentMember.where(name: name).destroy_all
+          CurrentMember.where(user: user).destroy_all
         end
       end
     end
 
     def post_update(status)
-      name = status[:name]
+      user = status[:user]
       action = status[:action]
       report_template = Slackattend.config[:report_template] || DEFAULT_REPORT_TEMPLATE
-      text = report_template % [name, action]
+      text = report_template % [user, action]
       p Slack.chat_postMessage({
         :ts => Time.now.to_f,
         :channel => Slackattend.config[:report_channel_id],

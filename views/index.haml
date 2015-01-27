@@ -3,9 +3,9 @@
   - @ins.each do |m|
     .tile.animated.fadeIn{"data-click" => "transform"}
       .tile-content.image
-        %img{:src => "#{m.avatar_image_url}", "id" => "#{m.name}", "alt" => "#{@in_action}"}/
+        %img{:src => "#{m.avatar_image_url}", "id" => "#{m.user}", "alt" => "#{@in_action}"}/
       .brand
-        .label.fg-amber #{m.name}
+        .label.fg-amber #{m.user}
         .badge.available
     / end tile
 / End group
@@ -15,5 +15,5 @@
   - @outs.each do |m|
     %a.tile.half.bg-dark.animated.fadeIn{"data-click" => "transform"}
       .tile-content
-        %img{:src => "#{m.avatar_image_url}", "id" => "#{m.name}", "alt" => "#{@out_action}"}/
+        %img{:src => "#{m.avatar_image_url}", "id" => "#{m.user}", "alt" => "#{@out_action}"}/
 / End tile group

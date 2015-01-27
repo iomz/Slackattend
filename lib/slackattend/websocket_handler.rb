@@ -1,5 +1,5 @@
 module Slackattend
-  class Backend
+  class WebsocketHandler
     KEEPALIVE_TIME = 15
     def initialize(app)
       @app = app
@@ -22,12 +22,13 @@ module Slackattend
         ws.on(:message) do |event|
           p [:message, event.data]
           data = JSON.parse(event.data)
-          name = data['name']
+          user = data['user']
           action = data['action']
-          unless CurrentMember.where(:name => name).empty?
-            StatusLog.create(:name => name, :action => action)
-            Slackattend.post_update({:name => name, :action => action})
-            @clients.each{ |ws| ws.send({ id: name, action: action}.to_json) }
+          unless CurrentMember.where(:user => user).empty?
+            @clients.each{ |ws| ws.send({ id: user, action: action}.to_json) }
+            StatusLog.create(:user => user, :action => action)
+            #SojournTime.log(user, action, roglotate=false)
+            Slackattend.post_update({:user => user, :action => action})
           end
         end
 

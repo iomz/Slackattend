@@ -1,6 +1,6 @@
 /* When an user action is fired */
 var updateStatus = function(id, action) {
-    var data = JSON.stringify({ name: id, action: action })
+    var data = JSON.stringify({ user: id, action: action })
     ws.send(data);
     $.Dialog.close();
 };
