@@ -44,9 +44,9 @@ module Slackattend
 
     def post_update(status)
       user = status[:user]
-      action = status[:action]
+      action_name = Slackattend.config.key(status[:action])
       report_template = Slackattend.config[:report_template] || DEFAULT_REPORT_TEMPLATE
-      text = report_template % [user, action]
+      text = report_template % [user, action_name]
       p Slack.chat_postMessage({
         :ts => Time.now.to_f,
         :channel => Slackattend.config[:report_channel_id],

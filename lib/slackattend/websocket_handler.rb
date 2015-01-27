@@ -23,9 +23,13 @@ module Slackattend
           p [:message, event.data]
           data = JSON.parse(event.data)
           user = data['user']
-          action = data['action']
+          action_name = data['action_name']
+          action = Slackattend.config.key(action_name)
+          p "action_name, action"
+          p action_name
+          p action
           unless CurrentMember.where(:user => user).empty?
-            @clients.each{ |ws| ws.send({ id: user, action: action}.to_json) }
+            @clients.each{ |ws| ws.send({ id: user, action_name: action_name }.to_json) }
             StatusLog.create(:user => user, :action => action)
             #SojournTime.log(user, action, roglotate=false)
             Slackattend.post_update({:user => user, :action => action})
