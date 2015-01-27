@@ -115,7 +115,9 @@ $(document).ready(function(e) {
 
     ws.onclose = function() {
         console.log(ws);
+        location.reload()
         // Need to reconnect here
+        /*
         $.Dialog({
             overlay: true,
             shadow: true,
@@ -137,6 +139,7 @@ $(document).ready(function(e) {
                 $.Dialog.content(content);
             }
         });
+        */
     }
 
     /*
