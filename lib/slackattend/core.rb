@@ -13,7 +13,7 @@ module Slackattend
 
     def log_sojourn_time(user, action, logrotate=false)
       # validates the user is leaving the room
-      unless action == :out
+      unless (action == :out) ^ logrotate
         return
       end
   
