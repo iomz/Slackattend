@@ -43,8 +43,8 @@ module Slackattend
     end
 
     def midnight_rotate()
-      CurrentMember.select("user, status") do |user, status|
-        Slackattend.log_sojourn_time(user, status, logrotate=true)
+      CurrentMember.select(:user, :status).each do |m|
+        Slackattend.log_sojourn_time(m.user, m.status.to_sym, logrotate=true)
       end
     end
 
