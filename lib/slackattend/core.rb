@@ -1,5 +1,8 @@
 module Slackattend
   module Core
+    # time at midnight
+    MIDNIGHT = '00:00'.freeze
+
     def config
       @config ||= {}
     end
@@ -20,23 +23,23 @@ module Slackattend
   
       # midnight logrotate
       if logrotate
-        date = from.to_date
-        to = Time.parse("23:59", date)
+        to = Time.parse(MIDNIGHT, date)
+        from = Time.parse(MIDNIGHT, date.prev_day) if from.to_date < date.prev_day
       # unless logrotate and overnight
       elsif from.to_date < date
-        from = Time.parse("00:00")
+        from = Time.parse(MIDNIGHT)
       end
   
       # sojour time in minute
       minute = ((to - from)/60).to_i
-      SojournTime.create(:user => user, :date => date, :from => from, :to => to, :minute => minute) unless minute == 0
+      SojournTime.create(:user => user, :from => from, :to => to, :minute => minute) unless minute == 0
     end
 
     def minutely_counter_update()
       now = DateTime.now.to_time.to_i
       now -= now%60
       count = CurrentMember.where(status: "in").count
-      AttendanceCount.create(:date => Time.at(now).to_date, :time => Time.at(now), :count => count)
+      AttendanceCount.create(:time => Time.at(now), :count => count)
     end
 
     def midnight_rotate()

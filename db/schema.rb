@@ -14,7 +14,6 @@
 ActiveRecord::Schema.define(version: 20150127073332) do
 
   create_table "attendance_counts", force: :cascade do |t|
-    t.date    "date"
     t.time    "time"
     t.integer "count"
   end
@@ -29,7 +28,6 @@ ActiveRecord::Schema.define(version: 20150127073332) do
 
   create_table "sojourn_times", force: :cascade do |t|
     t.string  "user"
-    t.date    "date"
     t.time    "from"
     t.time    "to"
     t.integer "minute"
