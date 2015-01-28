@@ -31,11 +31,16 @@ module Slackattend
         user = m['name']
         avatar_image_url = m['profile']['image_original'] || m['profile']['image_192']
         unless config[:excluded_users].include?(user)
-          CurrentMember.where(user: user).first_or_create do |m|
-            m.user = user
-            m.avatar_image_url = avatar_image_url
+          m = CurrentMember.where(user: user).first_or_create
+          if StatusLog.where(:user => user).empty?
+            StatusLog.create(:user => user, :action =>:out)
+            m.status = :out
+          else
+            m.status = StatusLog.order("id desc").find_by_user(user).action
           end
-          StatusLog.create(:user => user, :action =>:out) if StatusLog.where(:user => user).empty?
+          m.user = user
+          m.avatar_image_url = avatar_image_url
+          m.save!
         else
           CurrentMember.where(user: user).destroy_all
         end
@@ -47,7 +52,7 @@ module Slackattend
       action_name = Slackattend.config[status[:action]]
       report_template = Slackattend.config[:report_template] || DEFAULT_REPORT_TEMPLATE
       text = report_template % [user, action_name]
-      p Slack.chat_postMessage({
+      Slack.chat_postMessage({
         :ts => Time.now.to_f,
         :channel => Slackattend.config[:report_channel_id],
         :text => text,

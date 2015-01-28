@@ -34,7 +34,6 @@ module Slackattend
       @ins = []
       @outs = []
       CurrentMember.all.each do |m|
-        p StatusLog.order("id desc").find_by_user(m.user).action
         case StatusLog.order("id desc").find_by_user(m.user).action
         when "in"
           @ins << m

@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20150127073332) do
   create_table "current_members", force: :cascade do |t|
     t.string   "user"
     t.string   "avatar_image_url"
+    t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

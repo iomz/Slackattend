@@ -12,6 +12,8 @@ ActiveRecord::Base.default_timezone = :local
 
 Slackattend.setup
 Slackattend.update_database
+Slackattend.log_start
+
 use Slackattend::WebsocketHandler
 run Slackattend::App
 

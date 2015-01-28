@@ -11,4 +11,5 @@ public/image/*
 test
 tmp
 vendor
+driver.rb
 

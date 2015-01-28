@@ -28,6 +28,7 @@ module Slackattend
           unless CurrentMember.where(:user => user).empty?
             @clients.each{ |ws| ws.send({ id: user, action_name: action_name }.to_json) }
             StatusLog.create(:user => user, :action => action)
+            CurrentMember.find_by_user(user).update(status: action)
             Slackattend.post_update({:user => user, :action => action})
             Slackattend.log_sojourn_time(user, action) # if action == :out
           end

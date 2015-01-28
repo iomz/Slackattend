@@ -3,6 +3,7 @@ class CreateCurrentMembers < ActiveRecord::Migration
     create_table :current_members do |t|
       t.string :user
       t.string :avatar_image_url
+      t.string :status
       t.timestamps :null => true
     end
   end
