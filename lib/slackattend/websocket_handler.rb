@@ -1,9 +1,14 @@
 module Slackattend
   class WebsocketHandler
-    KEEPALIVE_TIME = 15
+    KEEPALIVE_TIME = 15.freeze
+
     def initialize(app)
       @app = app
       @clients = []
+    end
+
+    def self.parse_event_data(data)
+      return data
     end
 
     def call(env)
@@ -26,7 +31,7 @@ module Slackattend
           action_name = data['action_name']
           action = Slackattend.config.key(action_name)
           unless CurrentMember.where(:user => user).empty?
-            @clients.each{ |ws| ws.send({ id: user, action_name: action_name }.to_json) }
+            @clients.each{ |wss| wss.send({ id: user, action_name: action_name }.to_json) }
             StatusLog.create(:user => user, :action => action)
             CurrentMember.find_by_user(user).update(status: action)
             Slackattend.post_update({:user => user, :action => action})
