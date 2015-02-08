@@ -58,6 +58,30 @@ module Slackattend
           midnight_rotate if Time.at(now).strftime("%H%M") == '0'*4
         end
       end
+      t.abort_on_exception = true
+    end
+
+    def rtm_start()
+      puts "* Starting a slack RTM client: slackattend2"
+      t = Thread.new do
+        c = Slackattend.get_rtm_client
+        c.on(:message) do |data|
+          ch = Slackattend.get_channel_name(data['channel'])
+          begin
+            usr = Slackattend.get_user_name(data['user'])
+          rescue
+            usr = 'unknown'
+          end
+          unless usr == 'unknown' and usr == 'slackattend'
+            txt = data['text']
+            p "#{usr}@#{ch}: #{txt}"
+            reply = ["うるさい", "だまれ", "かえれ", "がんばれ"].sample
+            Slackattend.post("@#{usr}: #{reply}")
+          end
+        end
+        c.start
+      end
+      t.abort_on_exception = true
     end
   end
 

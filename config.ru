@@ -1,5 +1,8 @@
 require 'slackattend'
 
+# ActiveRecord debug message
+ActiveRecord::Base::logger.level = 1
+
 # Encoding
 Encoding.default_external = Encoding.find('UTF-8')
 
@@ -13,6 +16,7 @@ ActiveRecord::Base.default_timezone = :local
 Slackattend.setup
 Slackattend.update_database
 Slackattend.log_start
+Slackattend.rtm_start
 
 use Slackattend::WebsocketHandler
 run Slackattend::App

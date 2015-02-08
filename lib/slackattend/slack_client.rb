@@ -18,12 +18,27 @@ module Slackattend
       update_database
     end
 
+    # Get an user name by user ID
+    def get_user_name(user)
+      return Slack.users_info({:user => user})["user"]["name"]
+    end
+
+    # Get a channel name by channel ID
+    def get_channel_name(channel)
+      return Slack.channels_info({:channel => channel})["channel"]["name"]
+    end
+
     # Get a Slack channel ID by its name
     def get_channel_id_by_name(name)
       channel = Slack.channels_list['channels'].find{ |c| c['name'] == name } ||
         Slack.channels_create({:name => name})['channel']
       return channel['id']
     end 
+
+    # Get a RTM client
+    def get_rtm_client
+      return Slack.realtime
+    end
 
     # Update users based on Slack userlist
     def update_database
@@ -52,6 +67,10 @@ module Slackattend
       action_name = Slackattend.config[status[:action]]
       report_template = Slackattend.config[:report_template] || DEFAULT_REPORT_TEMPLATE
       text = report_template % [user, action_name]
+      post(text)
+    end
+
+    def post(text)
       Slack.chat_postMessage({
         :ts => Time.now.to_f,
         :channel => Slackattend.config[:report_channel_id],

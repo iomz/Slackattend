@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "haml"
   spec.add_dependency "json"
   spec.add_dependency "puma"
-  spec.add_dependency "slack-api"
+  spec.add_dependency "slack-api", "~> 1.1.0"
   spec.add_dependency "sinatra"
   spec.add_dependency "sinatra-activerecord"
   spec.add_dependency "sqlite3"
