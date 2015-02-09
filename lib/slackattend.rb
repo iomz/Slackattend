@@ -1,7 +1,10 @@
 %w(
+  addressable/uri
   faye/websocket
   haml
   json
+  natto
+  nokogiri
   open-uri
   puma
   sinatra/activerecord
@@ -19,6 +22,7 @@
   core
   slack_client
   websocket_handler
+  sentiment_analyzer
 ).each { |name| require_dependency File.expand_path("../slackattend/#{name}", __FILE__) }
 
 module Slackattend

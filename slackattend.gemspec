@@ -23,9 +23,12 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.2.0"
   spec.add_development_dependency "foreman"
 
+  spec.add_dependency "addressable"
   spec.add_dependency "faye-websocket"
   spec.add_dependency "haml"
   spec.add_dependency "json"
+  spec.add_dependency "natto"
+  spec.add_dependency "nokogiri"
   spec.add_dependency "puma"
   spec.add_dependency "slack-api", "~> 1.1.0"
   spec.add_dependency "sinatra"

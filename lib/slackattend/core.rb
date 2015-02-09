@@ -72,10 +72,17 @@ module Slackattend
           rescue
             usr = 'unknown'
           end
-          unless usr == 'unknown' and usr == 'slackattend'
+          unless usr == 'unknown' or usr == 'slackattend'
             txt = data['text']
             p "#{usr}@#{ch}: #{txt}"
-            reply = ["うるさい", "だまれ", "かえれ", "がんばれ"].sample
+            case Slackattend::SentimentAnalyzer.judge(txt)[0]
+            when :positive
+              reply = ["うるさい", "おっけー", "よかったね"].sample
+            when :negative
+              reply = ["がんばって！", "だいじょうぶ？", "はやくげんきになってね"].sample
+            when :neutral
+              reply = ["りょうかい", "わかりました", "はやくきて"].sample
+            end
             Slackattend.post("@#{usr}: #{reply}")
           end
         end
