@@ -77,11 +77,11 @@ module Slackattend
             p "#{usr}@#{ch}: #{txt}"
             case Slackattend::SentimentAnalyzer.judge(txt)[0]
             when :positive
-              reply = ["うるさい", "おっけー", "よかったね"].sample
+              reply = ["いいじゃん", "おっけー", "よかったね"].sample
             when :negative
               reply = ["がんばって！", "だいじょうぶ？", "はやくげんきになってね"].sample
             when :neutral
-              reply = ["りょうかい", "わかりました", "はやくきて"].sample
+              reply = ["りょうかい", "わかりました", "はい"].sample
             end
             Slackattend.post("@#{usr}: #{reply}")
           end

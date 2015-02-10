@@ -7,6 +7,9 @@ var updateStatus = function(id, action_name) {
 
 /* Update the screen when server side process successful */
 var animateUpdate = function(id, action_name, avatar) {
+    $('#' + id).parent().parent().addClass('animated fadeOut');
+    $('#' + id).parent().parent().remove();
+
     if (action_name == in_action) {
         var newImg = $("<img/>", {
             alt: action_name,
@@ -61,7 +64,6 @@ $(document).click(function(e) {
     var action_name = ($(e.target).attr("alt") == in_action) ? out_action : in_action;
     var src = $(e.target).attr("src");
     if ($('#'+id).attr('alt') != undefined) {
-        console.log(id);
         $.Dialog({
             overlay: true,
             shadow: true,
@@ -79,7 +81,6 @@ $(document).click(function(e) {
                     '<label>User</label>' +
                     '<div class="input-control text info-state">' +
                     '<input type="text" name="user" value="' + id + '" readonly>' +
-                    //'<button class="btn-clear" onclick="clearUser()"></button>' +
                     '</div>' +
                     '<label></label>' +
                     '<div class="form-actions" align="right">' +
@@ -100,13 +101,10 @@ $(document).ready(function(e) {
 
     ws.onmessage = function(msg) {
         var data = JSON.parse(msg.data);
-        console.log(data);
         if (data.id && data.action_name) {
             var id = data.id;
             var action_name = data.action_name;
             var avatar = $('#' + id).attr('src');
-            $('#' + id).parent().parent().addClass('animated fadeOut');
-            $('#' + id).parent().parent().remove();
             animateUpdate(id, action_name, avatar);
         } else {
             console.log(data);
@@ -116,41 +114,8 @@ $(document).ready(function(e) {
     ws.onclose = function() {
         console.log(ws);
         location.reload()
-        // Need to reconnect here
-        /*
-        $.Dialog({
-            overlay: true,
-            shadow: true,
-            flat: true,
-            draggable: true,
-            title: '',
-            content: '',
-            padding: 10,
-            width: '30%',
-            onShow: function(_dialog) {
-                var content =
-                    '<label>The websocket connection dropped...</label>' +
-                    '</div>' +
-                    '<label></label>' +
-                    '<div class="form-actions" align="right">' +
-                    '<button class="button success" type="button" onclick="location.reload()">Click here to reload the page</button> ' +
-                    '</div>';
-                $.Dialog.title('Connection lost');
-                $.Dialog.content(content);
-            }
-        });
-        */
     }
 
-    /*
-    var input = $('#input')
-    input.change(function () {
-      var msg = input.val();
-      ws.send(msg);
-      append_li('"' + msg + '" to server');
-      input.val("");
-    });
-    */
 });
 
 var ws = new WebSocket(location.href.replace(/^http/, 'ws'));
