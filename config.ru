@@ -14,7 +14,6 @@ ActiveRecord::Base.default_timezone = :local
 #\ -s puma -E production
 
 Slackattend.setup
-Slackattend.update_database
 Slackattend.log_start
 Slackattend.rtm_start
 

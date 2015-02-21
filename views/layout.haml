@@ -7,6 +7,8 @@
     %meta{:content => "Iori Mizutani, Tokyo, Japan", :name => "author"}/
     %link{:href => "vendor/Metro-UI-CSS/min/metro-bootstrap.min.css", :rel => "stylesheet"}/
     %link{:href => "vendor/animate.css/animate.css", :rel => "stylesheet"}/
+    / Local CSS
+    %link{:href => "css/main.css", :rel => "stylesheet"}/
     / Load JavaScript Libraries
     %script{:src => "vendor/jquery/dist/jquery.min.js"}
     %script{:src => "vendor/jqueryui/ui/widget.js"}
@@ -17,6 +19,7 @@
     %script
       in_action = "#{@in_action}";
       out_action = "#{@out_action}";
+      away_action = "#{@away_action}";
     %title= @title
   %body.metro
     .tile-area.tile-area-dark

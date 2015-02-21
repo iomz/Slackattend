@@ -34,8 +34,10 @@ module Slackattend
     get '/' do
       @title = Slackattend.config[:title]
       @in_action = Slackattend.config[:in]
+      @away_action = Slackattend.config[:away]
       @out_action = Slackattend.config[:out]
       @ins = []
+      @aways = []
       @outs = []
       CurrentMember.all.each do |m|
         case StatusLog.order("id desc").find_by_user(m.user).action

@@ -1,4 +1,10 @@
-#in.tile-group.five
+#face.tile-group.two
+  .tile-group-title Face
+  #container
+    %video#videoElement{:autoplay => "true"}
+/ End tile group
+
+#in.tile-group.four
   .tile-group-title In-room
   - @ins.each do |m|
     .tile.animated.fadeIn{"data-click" => "transform"}
@@ -10,10 +16,20 @@
     / end tile
 / End group
 
-#out.tile-group.three
+#away.tile-group.two
+  .tile-group-title Away
+  - @aways.each do |m|
+    %a.tile.half.bg-dark.animated.fadeIn{"data-click" => "transform"}
+      .tile-content
+        %img{:src => "#{m.avatar_image_url}", "id" => "#{m.user}", "alt" => "#{@away_action}"}/
+/ End tile group
+
+#out.tile-group.four
   .tile-group-title Absent
   - @outs.each do |m|
     %a.tile.half.bg-dark.animated.fadeIn{"data-click" => "transform"}
       .tile-content
         %img{:src => "#{m.avatar_image_url}", "id" => "#{m.user}", "alt" => "#{@out_action}"}/
 / End tile group
+
+

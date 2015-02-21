@@ -1,3 +1,14 @@
+var ws = new WebSocket(location.href.replace(/^http/, 'ws'));
+var video;
+
+var handleVideo = function(stream) {
+    video.src = window.URL.createObjectURL(stream);
+}
+
+var videoError = function(e) {
+    ;
+}
+
 /* When an user action is fired */
 var updateStatus = function(id, action_name) {
     var data = JSON.stringify({ user: id, action_name: action_name })
@@ -116,7 +127,12 @@ $(document).ready(function(e) {
         location.reload()
     }
 
-});
+    video = $("#videoElement").get(0);
 
-var ws = new WebSocket(location.href.replace(/^http/, 'ws'));
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+     
+    if (navigator.getUserMedia) {
+        navigator.getUserMedia( {video: true}, handleVideo, videoError);
+    }
+});
 
